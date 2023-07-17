@@ -14,24 +14,9 @@ jobs:
     - name: 'build neovim'
       run: 'bash build_neovim.sh'
 
-    - name: Create release
-      id: create_release
-      uses: actions/create-release@v1.0.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.MYTOKEN }}
+    - name: upload artifact
+      uses: actions/upload-artifact@v3
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-
-    - name: Upload release asset
-      id: upload-release-asset
-      uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.MYTOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: /usr/local/bin/nvim
-        asset_name: neovim-nightly
-        asset_content_type: application/octet-stream
+        name: neovim-nightly
+        # path: ${{ github.workspace }}/your_dictionary
+        path: /usr/local/bin/nvim
