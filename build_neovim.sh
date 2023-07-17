@@ -12,7 +12,12 @@ set -euxo pipefail
 
 nightly_release="https://github.com/neovim/neovim/archive/refs/tags/nightly.tar.gz"
 
-curl -o ./neovim-nightly.tar.gz -L $nightly_release
+/opt/homebrew/bin/trash-put ~/GitHub_workspace/neovim* || echo
+rm -rf ~/GitHub_workspace/neovim* || echo
+
+curl -o ~/GitHub_workspace/neovim-nightly.tar.gz -L $nightly_release
+
+cd ~/GitHub_workspace/
 
 tar xf neovim-nightly.tar.gz
 
@@ -38,7 +43,3 @@ sed -i '' "${replace_line}s@.*@      symbol = wp->w_p_fcs_chars.foldsep;@" src/n
 make CMAKE_BUILD_TYPE=Release
 
 sudo make install
-
-echo "++++++++++++++++++++++++++"
-which nvim
-echo "++++++++++++++++++++++++++"
